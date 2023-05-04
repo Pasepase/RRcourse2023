@@ -1,0 +1,154 @@
+---
+title: "Doctor Who"
+author: "Paulina Sereikyte (444470)"
+format: html
+editor: visual
+theme: sketchy
+---
+
+## Summary 
+
+*Doctor Who* is a British science fiction television series that has been broadcast by the BBC since 1963. The show follows the adventures of a Time Lord called *the Doctor*, who travels through time and space in a time-travelling space ship called the TARDIS. *The Doctor* is a renegade who intervenes in history to fight evil and aid the oppressed. He is accompanied by companions and faces a variety of foes while saving civilizations and righting wrongs. The show has been a landmark of British popular culture and has resumed to much acclaim in 2005.
+
+![Doctor Who Season 8 Promo picture](https://ichef.bbci.co.uk/images/ic/1008x567/p023xp2w.jpg)
+
+## Viewership statistics
+
+Source: l[Doctor Who Guide: Statistics (doctorwhonews.net)](https://guide.doctorwhonews.net/info.php)
+
+|           |                        |                     |                    |
+|-----------|------------------------|---------------------|--------------------|
+| **Year**  | **Number of episodes** | **Duration**        | **Average rating** |
+| 2005      | 14                     | 10 hours 27 minutes | 8.08m              |
+| 2006      | 14                     | 10 hours 45 minutes | 7.83m              |
+| 2007      | 14                     | 11 hours 3 minutes  | 7.96m              |
+| 2008      | 14                     | 11 hours 10 minutes | 8.41m              |
+| 2009      | 3                      | 3 hours 0 minute    | 10.70m             |
+| 2010      | 15                     | 12 hours 10 minutes | 8.30m              |
+| 2011      | 14                     | 10 hours 50 minutes | 7.75m              |
+| 2012      | 6                      | 4 hours 43 minutes  | 8.28m              |
+| 2013      | 10                     | 8 hours 11 minutes  | 8.09m              |
+| 2014      | 13                     | 10 hours 49 minutes | 7.34m              |
+| 2015      | 13                     | 10 hours 27 minutes | 6.16m              |
+| 2016      | 1                      | 1 hour 0 minute     | 7.83m              |
+| 2017      | 13                     | 10 hours 20 minutes | 5.64m              |
+| 2018      | 10                     | 8 hours 25 minutes  | 7.96m              |
+| 2019      | 1                      | 0 hour 59 minutes   | 7.13m              |
+| 2020      | 10                     | 8 hours 51 minutes  | 5.40m              |
+| 2021      | 7                      | 6 hours 35 minutes  | 5.16m              |
+| 2022      | 3                      | 3 hours 13 minutes  | 4.39m              |
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+year= c(2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022)
+rating = c(8.08, 7.83, 7.96, 8.41, 10.70, 8.30, 7.75, 8.28, 8.09, 7.34, 6.16, 7.83, 5.64, 7.96, 7.13, 5.40, 5.16, 4.39)
+
+
+```
+
+```{r}
+#| echo: false
+#| warning: false
+library(ggplot2)
+
+df <- data.frame(year = c(2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022),
+                 rating = c(8.08, 7.83, 7.96, 8.41, 10.70, 8.30, 7.75, 8.28, 8.09, 7.34, 6.16, 7.83, 5.64, 7.96, 7.13, 5.40, 5.16, 4.39))
+
+
+ggplot(df, aes(x = year, y = rating)) +
+  geom_line(color = "#1C4966", size = 1.2) +
+  geom_point(color = "#1C4966", size = 3) +
+  labs(title = "Average rating over the years", x = "Year", y = "Rating") +
+  theme_minimal()+
+    theme(plot.title = element_text(size = 20, face = "bold", hjust = 0.5, color = "#1C4966"),
+        axis.title = element_text(size = 16, color = "#1C4966"),
+        axis.text = element_text(size = 14),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(color = "#1C4966", size = 1.2))
+```
+
+```{r}
+#| echo: false
+#| warning: false
+doctor_periods <- data.frame(
+  Doctor = c("9th Doctor", "10th Doctor", "11th Doctor", "12th Doctor", "13th Doctor"),
+  Period_Start = c(2005, 2006, 2011, 2014, 2018),
+  Period_End = c(2005, 2010, 2013, 2017, 2022)
+)
+
+
+df$Doctor <- ""
+for (i in 1:nrow(doctor_periods)) {
+  df$Doctor[df$year >= doctor_periods$Period_Start[i] & df$year <= doctor_periods$Period_End[i]] <- doctor_periods$Doctor[i]
+}
+
+ggplot(df, aes(x = year, y = rating, color = Doctor)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 3) +
+  labs(title = "Average rating over the years by Doctor", x = "Year", y = "Rating", color = "Doctor") +
+  scale_color_manual(values = c("#00AEEF", "#E87F00", "#6AB023", "#EC008C", "#FFF95D")) +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 20, face = "bold", hjust = 0.5,color = "#1C4966"),
+        axis.title = element_text(size = 16, color = "#1C4966"),
+        axis.text = element_text(size = 14),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(size = 1.2, color = "#1C4966")) 
+
+
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+doctor_periods <- data.frame(
+  Doctor = c("9th Doctor", "10th Doctor", "11th Doctor", "12th Doctor", "13th Doctor"),
+  Period_Start = c(2005, 2006, 2011, 2014, 2018),
+  Period_End = c(2005, 2010, 2013, 2017, 2022)
+)
+
+df$Doctor <- ""
+for (i in 1:nrow(doctor_periods)) {
+  df$Doctor[df$year >= doctor_periods$Period_Start[i] & df$year <= doctor_periods$Period_End[i]] <- doctor_periods$Doctor[i]
+}
+
+df_summary <- aggregate(df$rating, list(df$Doctor), mean)
+colnames(df_summary) <- c("Doctor", "Average_Rating")
+
+df_summary$Doctor <- factor(df_summary$Doctor, levels = c("9th Doctor", "10th Doctor", "11th Doctor", "12th Doctor", "13th Doctor"))
+df_summary <- df_summary[order(df_summary$Doctor),]
+
+ggplot(df_summary, aes(x = Doctor, y = Average_Rating, fill = Doctor)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Average rating per Doctor", x = "Doctor", y = "Average Rating") +
+  scale_fill_manual(values = c("#D1CCD2", "#7D4CDB", "#E6554A", "#3C3B6E", "#00AEEF")) +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 20, face = "bold", hjust = 0.5, color = "#1C4966"),
+        axis.title = element_text(size = 16, color = "#1C4966"),
+        axis.text = element_text(size = 14),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(size = 1.2),
+        legend.position = "none")
+```
+
+```{r}
+#| include: false
+#| message: false
+
+max_year <- year[which.max(rating)]
+
+df_summary <- aggregate(df$rating, list(df$Doctor), mean)
+colnames(df_summary) <- c("Doctor", "Average_Rating")
+
+doctor_min_avg_rating <- df_summary$Doctor[which.min(df_summary$Average_Rating)]
+```
+
+Each season has an iteration of the Doctor all of which had attracted different viewers and received different reviews.
+
+The viewership peaked in the era of the 10th doctor, especially in the year `r max_year` and has been declining ever since, with the latest seasons having record low rankings in the `r doctor_min_avg_rating` re-run.
